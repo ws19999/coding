@@ -4,10 +4,6 @@ int main(void)
 {
 	long long N, P,Num=1;
 	cin >> N >> P;
-	for (long long i = 2; i <= N; i++)
-	{
-		Num *= i;
-		Num %= P;
-	}
+	for (long long i = 2; i <= N; i++)Num=(Num*i)%P;
 	cout << Num;
 }
