@@ -15,7 +15,7 @@ int main(void)
 		int x;
 		long long a;
 		cin >> x >> a;
-		village[x] += a;
+		village[x] = a;
 		total += a;
 	}
 	long long mid = total / 2;
