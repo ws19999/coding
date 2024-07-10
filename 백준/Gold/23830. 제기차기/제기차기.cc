@@ -4,15 +4,15 @@ int table[100000];
 int main(void)
 {
 	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	int N, p, q, r, K=-1,start=1,end=100001;
-	long long S;
+	int N, p, q, r, K=-1,start=1,end=100001,mid;
+	long long S,temp;
 	cin >> N;
 	for (int i = 0; i < N; i++)cin >> table[i];
 	cin >> p >> q >> r >> S;
 	while (start <= end)
 	{
-		int mid = (start + end) / 2;
-		long long temp = 0;
+		mid = (start + end) / 2;
+		temp = 0;
 		for (int i = 0; i < N; i++)
 		{
 			if (table[i] > mid + r)temp += table[i] - p;
