@@ -60,7 +60,6 @@ int main(void)
 				else if (j == 2 or j == 4 or j == 6)table[i][1] += table[i - 1][j];
 				else table[i][8] += table[i - 1][j];
 			}
-			for (int j = 0; j < 9; j++)table[i][j] %= Mod;
 		}
 		for (int j = 0; j < 9; j++)table[i][j] %= Mod;
 	}
