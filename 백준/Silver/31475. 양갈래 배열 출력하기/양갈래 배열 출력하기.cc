@@ -81,15 +81,33 @@ int main(void)
 		y = nexty;
 		table[x][y] = ++num;
 	}
-	snail((dir+3)%4, 3);
-	snail((dir+1)%4, 1);
-	for (int i = 0; i < N; i++)
+	if(s=='U' or s=='R')snail((dir + 1) % 4, 1);
+	else snail((dir+3)%4, 3);
+	if (s == 'U' or s == 'D')
 	{
-		for (int j = 0; j < M; j++)
+		for (int i = 0; i < N; i++)
 		{
-			cout << table[i][j] << " ";
+			for (int j = 0; j < M; j++)
+			{
+				if (j > M / 2)cout << table[i][M - 1 - j];
+				else cout << table[i][j];
+				cout << " ";
+			}
+			cout << "\n";
 		}
-		cout << "\n";
+	}
+	else
+	{
+		for (int i = 0; i < N; i++)
+		{
+			for (int j = 0; j < M; j++)
+			{
+				if (i > N / 2) cout << table[N - 1 - i][j];
+				else cout << table[i][j];
+				cout << " ";
+			}
+			cout << "\n";
+		}
 	}
 	return 0;
 }
