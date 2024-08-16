@@ -1,31 +1,7 @@
 #include <iostream>
 #include <deque>
-// __int128를 출력하기 위한 헬퍼 함수
 using namespace std;
-void printInt128(__int128 value) {
-	if (value == 0) {
-		std::cout << "0";
-		return;
-	}
-
-	char buffer[40];  // __int128의 최대 길이는 39자리이므로 충분한 크기를 할당
-	char* ptr = buffer + sizeof(buffer);
-	*--ptr = '\0';
-
-	__int128 temp = value < 0 ? -value : value;
-
-	while (temp > 0) {
-		*--ptr = '0' + (temp % 10);
-		temp /= 10;
-	}
-
-	if (value < 0) {
-		*--ptr = '-';
-	}
-
-	cout << ptr;
-}
-__int128 answer = 0;
+unsigned long long answer = 0;
 int main(void)
 {
 	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -53,7 +29,6 @@ int main(void)
 			}
 		}
 	}
-	answer += dq.front() - dq.back();
-	printInt128(answer);
+	cout << answer + dq.front() - dq.back();
 	return 0;
 }
