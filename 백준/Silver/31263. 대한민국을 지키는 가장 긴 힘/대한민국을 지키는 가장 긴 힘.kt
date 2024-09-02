@@ -8,13 +8,13 @@ fun main()
     var pos=N-1
     while(true)
     {
-        if(pos<=1)
+        if(pos<=2)
         {
-            answer++
-            break
-        }
-        else if(pos==2)
-        {
+            if(pos<=1)
+            {
+                answer++
+                break
+            }
             if(S[pos-2]<='5' || (S[pos-2]=='6' && S[pos-1]<='3') || (S[pos-2]=='6' && S[pos-1]=='4' && S[pos]<='1'))
             {
                 answer++
@@ -35,7 +35,11 @@ fun main()
                 else pos-=2
             }
             else if(S[pos-2]<='5' || (S[pos-2]=='6' && S[pos-1]<='3') || (S[pos-2]=='6' && S[pos-1]=='4' && S[pos]<='1'))pos-=3
-            else pos-=2
+            else
+            {
+                if(S[pos-1]=='0')pos--
+                else pos-=2
+            }
         }
     }
     bw.write("${answer}")
