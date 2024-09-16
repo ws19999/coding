@@ -1,3 +1,5 @@
+import sys
+input = sys.stdin.readline
 N=int(input())
 최소=[0,0,0]
 최대=[0,0,0]
