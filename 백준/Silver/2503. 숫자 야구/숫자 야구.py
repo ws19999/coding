@@ -1,34 +1,37 @@
-n=int(input())
-table,table1=[],[]
-for i in range(1,10):
-    for j in range(1,10):
-        if j==i:
+import sys
+input = sys.stdin.readline
+print = sys.stdout.write
+N=int(input())
+arr=[]
+for a in range(1,10):
+    for b in range(1,10):
+        if(a==b):
             continue
-        for k in range(1,10):
-            if k==i or k==j:
+        for c in range(1,10):
+            if(c==a or c==b):
                 continue
-            table.append(i*100+j*10+k)
-            table1.append(i*100+j*10+k)
-for _ in range(n):
-    num,strike,ball=map(int,input().split())
-    num1,num2,num3=num//100,num//10-10*(num//100),num%10
-    for s in table:
-        strike1,ball1=0,0
-        i,j,k=s//100,s//10-10*(s//100),s%10
-        if num1==i:
-            strike1+=1
-        elif num1==j or num1==k:
-            ball1+=1
-        if num2==j:
-            strike1+=1
-        elif num2==i or num2==k:
-            ball1+=1
-        if num3==k:
-            strike1+=1
-        elif num3==i or num3==j:
-            ball1+=1
-        if strike1==strike and ball1==ball:
-            continue
-        elif s in table1:
-            table1.remove(s)
-print(len(table1))
+            arr.append(a*100+b*10+c)
+for _ in range(N):
+    num,s,b=map(int,input().split(" "))
+    k=0
+    while(True):
+        민혁=[num//100,(num//10)%10,num%10]
+        영수=[arr[k]//100,(arr[k]//10)%10,arr[k]%10]
+        스트라이크,볼=0,0
+        for i in range(0,3):
+            for j in range(0,3):
+                if(영수[i]==민혁[j]):
+                    if(i==j):
+                       스트라이크+=1
+                    else:
+                       볼+=1
+        if(스트라이크==s and 볼==b):
+            if(arr[k]==arr[-1]):
+                break
+            k+=1
+        else:
+            if(arr[k]==arr[-1]):
+                del arr[k]
+                break
+            del arr[k]
+print(f"{len(arr)}")
