@@ -4,14 +4,8 @@ using namespace std;
 int arr[1000001];
 int main(void)
 {
-	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 	int A, K;
 	cin >> A >> K;
-	if (A == K)
-	{
-		cout << 0;
-		return 0;
-	}
 	queue<int> 큐;
 	큐.push(A);
 	while (!arr[K])
