@@ -12,22 +12,20 @@ int main(void)
 	for (int option = 0; option < N; option++)
 	{
 		int 단축키 = -1,첫글자 = 0;
-		string temp = "", str;
+		string str;
 		getline(cin, str);
 		int len = str.length();
 		for (int i = 0; i < len; i++)
 		{
-			temp += str[i];
 			if (str[i] == ' ' or i==len-1)
 			{
-				if (!keys[tolower(temp[0])])
+				if (!keys[tolower(str[첫글자])])
 				{
-					keys[tolower(temp[0])] = true;
+					keys[tolower(str[첫글자])] = true;
 					단축키 = 첫글자;
 					break;
 				}
 				첫글자 = i + 1;
-				temp = "";
 			}
 		}
 		if (단축키 == -1)
