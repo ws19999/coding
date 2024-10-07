@@ -1,6 +1,5 @@
 import kotlin.math.max
 import kotlin.math.min
-import java.math.BigInteger
 fun main()
 {
     val br=System.`in`.bufferedReader()
@@ -19,6 +18,6 @@ fun main()
         else maxy=min(maxy,y.toInt())
     }
     if(maxx==1000000001 || maxy==1000000001 || minx == -1000000001 || miny == -1000000001)bw.write("Infinity")
-    else bw.write("${((maxx-minx-1).toBigInteger())*((maxy-miny-1).toBigInteger())}")
+    else bw.write("${((maxx-minx-1).toLong())*((maxy-miny-1).toLong())}")
     bw.close()
 }
