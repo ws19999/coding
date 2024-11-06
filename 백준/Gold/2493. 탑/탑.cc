@@ -13,7 +13,7 @@ int main(void)
 	{
 		while (!pq.empty())
 		{
-			if (-pq.top().first <= table[i])
+			if (-pq.top().first < table[i])
 			{
 				answer[pq.top().second] = i;
 				pq.pop();
