@@ -1,3 +1,4 @@
-SELECT a.name
-FROM Employee a
-WHERE (SELECT COUNT(*) FROM Employee b WHERE b.managerId = a.id)>=5
+SELECT b.name
+FROM Employee a LEFT JOIN Employee b on (a.managerId = b.id )
+GROUP BY b.id
+HAVING COUNT(*)>=5 and b.name IS NOT NULL
