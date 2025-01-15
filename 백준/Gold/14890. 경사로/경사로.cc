@@ -1,133 +1,50 @@
 #include <iostream>
 using namespace std;
-int block[100][100];
-int map[100][100];
-int main() {
-    int n, ans = 0, l;
-    cin >> n >> l;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            cin >> map[i][j];
-        }
-    }
-    for (int i = 0; i < n; i++)
-    {
-        bool possible = true;
-        for (int j = 0; j < n - 1; j++)
-        {
-            if (block[i][j] == 1 && map[i][j + 1] == map[i][j])continue;
-            if (map[i][j] == map[i][j + 1])continue;
-            if (map[i][j] == map[i][j + 1] + 1)
-            {
-                if (j + l >= n)
-                {
-                    possible = false;
-                    break;
-                }
-                block[i][j + 1] = 1;
-                for (int k = j + 2; k <= j + l; k++)
-                {
-                    if (map[i][k] == map[i][k - 1])
-                    {
-                        block[i][k] = 1;
-                    }
-                    else {
-                        possible = false;
-                        break;
-                    }
-                }
-            }
-            else if (map[i][j] == map[i][j + 1] - 1)
-            {
-                if (j - l < -1)
-                {
-                    possible = false;
-                    break;
-                }
-                if (block[i][j] == 1)
-                {
-                    possible = false;
-                    break;
-                }
-                block[i][j] = 1;
-                for (int k = j - 1; k > j - l; k--)
-                {
-                    if (block[i][k] == 1)
-                    {
-                        possible = false;
-                        break;
-                    }
-                    block[i][k] = 1;
-                }
-            }
-            else
-            {
-                possible = false;
-                break;
-            }
-        }
-        if (possible)ans++;
-    }
-    for (int j = 0; j < n; j++)
-    {
-        bool possible = true;
-        for (int i = 0; i < n - 1; i++)
-        {
-            if (block[i][j] == 2 && map[i + 1][j] == map[i][j])continue;
-            if (map[i][j] == map[i + 1][j])continue;
-            if (map[i][j] == map[i + 1][j] + 1)
-            {
-                if (i + l >= n)
-                {
-                    possible = false;
-                    break;
-                }
-                block[i + 1][j] = 2;
-                for (int k = i + 2; k <= i + l; k++)
-                {
-                    if (map[k][j] == map[k - 1][j])
-                    {
-                        block[k][j] = 2;
-                    }
-                    else {
-                        possible = false;
-                        break;
-                    }
-                }
-            }
-            else if (map[i][j] == map[i + 1][j] - 1)
-            {
-                if (i - l < -1)
-                {
-                    possible = false;
-                    break;
-                }
-                if (block[i][j] == 2)
-                {
-                    possible = false;
-                    break;
-                }
-                block[i][j] = 2;
-                for (int k = i - 1; k > i - l; k--)
-                {
-                    if (block[k][j] == 2)
-                    {
-                        possible = false;
-                        break;
-                    }
-                    block[k][j] = 2;
-                }
-            }
-            else
-            {
-                possible = false;
-                break;
-            }
-        }
-        if (possible)ans++;
-    }
-    cout << ans;
-    return 0;
+int N, L;
+int check(int i, int mapa[100][100]) {
+	int j = 1;
+	int l = -1;
+	while (j < N) {
+		if (mapa[i][j] == mapa[i][j - 1]) {
+			j++;
+			continue;
+		}
+		if (abs(mapa[i][j] - mapa[i][j - 1]) >= 2)return 0;
+		if (mapa[i][j] > mapa[i][j - 1]) {
+			for (int k = j - L; k <= j - 1; k++) {
+				if (k < 0 or k<=l)return 0;
+				if (mapa[i][k] != mapa[i][j - 1])return 0;
+			}
+			l = j - 1;
+			j++;
+		}
+		else {
+			for (int k = j - 1 + L; k > j; k--) {
+				if (k >= N)return 0;
+				if (mapa[i][k] != mapa[i][j])return 0;
+			}
+			l = j - 1 + L;
+			j += L;
+		}
+	}
+	return 1;
+}
+int main(void) {
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int answer = 0;
+	int mapa[100][100];
+	int maparv[100][100];
+	cin >> N>>L;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			cin >> mapa[i][j];
+			maparv[j][i] = mapa[i][j];
+		}
+	}
+	for (int i = 0; i < N; i++) {
+		answer += check(i, mapa);
+		answer += check(i, maparv);
+	}
+	cout << answer;
+	return 0;
 }
