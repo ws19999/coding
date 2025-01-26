@@ -7,9 +7,10 @@ int height[50][50];
 int dx[] = { -1,-1,-1,0,1,1,1,0 }, dy[] = { -1,0,1,1,1,0,-1,-1 };
 char village[50][50];
 int housecnt = 0;
-int startx, starty,N,maxxmin=1000000,minnmax=0,totalmax=0,totalmin=1000000,ans=1000000;
+int startx, starty,N,minnmax=0,maxxmin=1000000,ans=1000000;
 deque<int> highs;
 bool startmorning(int minh, int maxh) {
+    if (height[startx][starty] < minh)return false;
     bool visited[50][50] = { false };
     int cnt=0;
     deque<pair<int, int>> dq;
@@ -37,14 +38,14 @@ bool startmorning(int minh, int maxh) {
     }
     return false;
 }
-void searchtired(int l, int r,int maxh) { //높이차
+void bsearch(int l, int r,int maxh) { //높이차
     while (l <= r) {
         int m = (l + r) / 2;
-        if (startmorning(maxh-m, maxh)) { //높이차를 더 줄여야댐.
-            ans = min(ans, m);
-            r = m - 1;
+        if (startmorning(highs[m], maxh)) { //높이차를 더 줄여야댐.
+            ans = min(ans, maxh-highs[m]);
+            l = m + 1;
         }
-        else l = m + 1;
+        else r = m - 1;
     }
 }
 int main(void)
@@ -70,18 +71,15 @@ int main(void)
                 highs.push_back(height[i][j]);
             }
             if (village[i][j] != '.') {
-                maxxmin = min(maxxmin, height[i][j]);
                 minnmax = max(minnmax, height[i][j]);
+                maxxmin = min(maxxmin, height[i][j]);
             }
-            totalmin = min(totalmin, height[i][j]);
-            totalmax = max(totalmax, height[i][j]);
         }
     }
     sort(highs.begin(), highs.end());
     for (int i = highs.size() - 1; i >= 0; i--) {
-        int h = highs[i]; //최대 높이
-        if (h < minnmax)break; 
-        searchtired(h - maxxmin, h - totalmin, h); //높이차. 
+        if (highs[i] < minnmax )break;
+        bsearch(0, i, highs[i]); //높이차. 
     }
     cout << ans;
     return 0;
