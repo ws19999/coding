@@ -1,107 +1,68 @@
 #include <iostream>
-#include <climits>
+#include <vector>
+#include <deque>
+#include <algorithm>
+#include <cmath>
 using namespace std;
-int table[100001];
-struct segment
-{
-	int min, start, end;
+struct node {
+    int minval, left, right;
 };
-segment segmenttree[450000];
-
-int minn;
-void findmin(int start, int end, int num)
-{
-	if (segmenttree[num].start >= start && segmenttree[num].end <= end)
-	{
-		minn = min(table[segmenttree[num].min], minn);
-		return;
-	}
-	else if (segmenttree[num].end < start || segmenttree[num].start > end)
-	{
-		return;
-	}
-	else if (segmenttree[num].min >= start && segmenttree[num].min <= end)
-	{
-		minn = min(table[segmenttree[num].min], minn);
-		return;
-	}
-	else
-	{
-		findmin(start, end, num * 2);
-		findmin(start, end, num * 2 + 1);
-	}
+struct node table[400000];
+int dfs(int i, int j, int num) {
+    int val = 1000000000;
+    if (table[num].left >= i && table[num].right <= j)return table[num].minval;
+    if (j > table[num * 2].right) {
+        val = min(val, dfs(i, j, num * 2 + 1));
+    }
+    if (i < table[num * 2 + 1].left) {
+        val = min(val, dfs(i, j, num * 2));
+    }
+    return val;
 }
 int main(void)
 {
-	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	table[0] = INT_MAX;
-		int n, m;
-		cin >> n;
-		for (int i = 1; i <= n; i++)
-		{
-			cin >> table[i];
-		}
-		table[n + 1] = -INT_MAX;
-		int k = 1;
-		while (k < n)k *= 2;
-		int s = 1;
-		for (int i = k; i < k * 2; i++)
-		{
-			if (s <= n)
-			{
-				segmenttree[i].min = s;
-				segmenttree[i].start = s;
-				segmenttree[i].end = s;
-			}
-			else
-			{
-				segmenttree[i].min = n + 1;
-				segmenttree[i].start = s;
-				segmenttree[i].end = s;
-			}
-			s++;
-		}
-		int temp = k;
-		while (temp > 1)
-		{
-			temp /= 2;
-			for (int i = temp; i < temp * 2; i++)
-			{
-				if (table[segmenttree[i * 2].min] <= table[segmenttree[i * 2 + 1].min])segmenttree[i].min = segmenttree[i * 2].min;
-				else segmenttree[i].min = segmenttree[i * 2 + 1].min;
-				segmenttree[i].start = segmenttree[i * 2].start;
-				segmenttree[i].end = segmenttree[i * 2 + 1].end;
-			}
-		}
-		cin >> m;
-		while (m--)
-		{
-			int quory;
-			cin >> quory;
-			if (quory == 1)
-			{
-				int i, v;
-				cin >> i >> v;
-				table[i] = v;
-				temp = k + i-1;
-				while (true)
-				{
-					temp /= 2;
-					if (!temp)break;
-					int ans;
-					if (table[segmenttree[temp * 2].min] <= table[segmenttree[temp * 2 + 1].min]) ans = segmenttree[temp * 2].min;
-					else ans = segmenttree[temp * 2 + 1].min;
-					segmenttree[temp].min = ans;
-				}
-			}
-			else if (quory == 2)
-			{
-				int i, j;
-				cin >> i >> j;
-				minn = INT_MAX;
-				findmin(i, j, 1);
-				cout << minn << "\n";
-			}
-		}
-	return 0;
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    int N;
+    cin >> N;
+    int pos = 1;
+    while (pos < N)pos *= 2;
+    for (int i = pos; i < pos + N; i++) {
+        cin >> table[i].minval;
+        table[i].left = i-pos+1;
+        table[i].right = i-pos+1;
+    }
+    for (int i = pos + N; i < pos * 2; i++) {
+        table[i].minval = 1000000001;
+        table[i].left = i-pos+1;
+        table[i].right = i-pos+1;
+    }
+    for (int p = pos / 2; p >= 1; p /= 2) {
+        for (int i = p; i < p * 2; i++) {
+            table[i].minval = min(table[i * 2].minval, table[i * 2 + 1].minval);
+            table[i].left = table[i * 2].left;
+            table[i].right = table[i * 2 + 1].right;
+        }
+    }
+    int M;
+    cin >> M;
+    for (int query = 1; query <= M; query++) {
+        int q;
+        cin >> q;
+        if (q == 1) {
+            int i, v;
+            cin >> i >> v;
+            i = pos + i - 1;
+            table[i].minval = v;
+            while (i >= 2) {
+                table[i / 2].minval = min(table[i/2*2].minval, table[i/2*2+1].minval);
+                i /= 2;
+            }
+        }
+        else if (q == 2) {
+            int i, j;
+            cin >> i >> j;
+            cout<<dfs(i,j,1)<<"\n";
+        }
+    }
+    return 0;
 }
