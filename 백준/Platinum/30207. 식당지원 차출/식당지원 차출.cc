@@ -48,7 +48,7 @@ int main(void)
     int nums[3][2];
     while (true) {
         if (-pq.top().first == maxx) break;
-        if (-pq.top().first == maxx - 1 && -pq.top().second == 2 && N%3==0)break;
+        
         if (N == 3)break;
         day++;
         for (int j = 0; j < 3; j++) {
