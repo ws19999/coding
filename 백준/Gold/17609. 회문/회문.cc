@@ -1,22 +1,20 @@
 #include <iostream>
 using namespace std;
 string str;
-int l, r;
-bool is_palindrome() {
-	int ltemp = l;
-	int rtemp = r;
-	while (ltemp < rtemp) {
-		if (str[ltemp] == str[rtemp]) {
-			ltemp++;
-			rtemp--;
+int is_palindrome(int l,int r,int depth) {
+	while (l < r) {
+		if (str[l] == str[r]) {
+			l++;
+			r--;
 		}
 		else {
-			l = ltemp;
-			r = rtemp;
-			return false;
+			if (depth == 1)return 1;
+			if (str[l + 1] == str[r] && !is_palindrome(l + 1, r,1))return 1;
+			if (str[r - 1] == str[l] && !is_palindrome(l, r - 1, 1))return 1;
+			return 2;
 		}
 	}
-	return true;
+	return 0;
 }
 int main(void)
 {
@@ -26,21 +24,7 @@ int main(void)
 	for (int tc = 0; tc < T; tc++)
 	{
 		cin >> str;
-		l = 0;
-		r = str.length() - 1;
-		if(is_palindrome())cout<<0<<"\n";
-		else {
-			int ll = l;
-			int rr = r;
-			l++;
-			if (is_palindrome())cout << 1 << "\n";
-			else {
-				l = ll;
-				r = rr - 1;
-				if (is_palindrome())cout << 1 << "\n";
-				else cout << 2 << "\n";
-			}
-		}
+		cout << is_palindrome(0, str.length() - 1,0) << "\n";
 	}
 	return 0;
 }
