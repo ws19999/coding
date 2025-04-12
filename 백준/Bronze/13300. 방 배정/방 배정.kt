@@ -12,7 +12,8 @@ fun main()
     var ans=0
     for(i in 1..6){
         for(j in 0..1){
-            ans+=arr[i][j]/2 + arr[i][j]%2
+            ans+=arr[i][j]/K
+            if(arr[i][j]%K!=0)ans++
         }
     }
     bw.write("$ans")
