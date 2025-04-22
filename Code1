@@ -45,3 +45,55 @@ public class MainActivity extends AppCompatActivity {
         handler.removeCallbacks(tickRunnable);
     }
 }
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView clockText;
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
+    private Runnable tickRunnable = new Runnable() {
+        @Override
+        public void run() {
+            flip3DText(timeFormat.format(new Date()));
+            handler.postDelayed(this, 1000);
+        }
+    };
+
+    private void flip3DText(String newText) {
+        // 1) 위로 반 플립
+        ObjectAnimator rotateOut = ObjectAnimator.ofFloat(clockText, "rotationX", 0f, 90f);
+        rotateOut.setDuration(200);
+
+        // 2) 텍스트 변경 + 아래에서 반 플립
+        ObjectAnimator rotateIn = ObjectAnimator.ofFloat(clockText, "rotationX", -90f, 0f);
+        rotateIn.setDuration(200);
+
+        rotateOut.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                clockText.setText(newText);
+                clockText.setRotationX(-90f);  // 회전 초기값
+            }
+        });
+
+        AnimatorSet flipAnim = new AnimatorSet();
+        flipAnim.playSequentially(rotateOut, rotateIn);
+        flipAnim.start();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        clockText = findViewById(R.id.clockText);
+        clockText.setText(timeFormat.format(new Date()));
+        handler.post(tickRunnable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(tickRunnable);
+    }
+}
