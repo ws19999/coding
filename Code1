@@ -1,0 +1,56 @@
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity {
+    private TextView clockText;
+    private Animation fadeOut, fadeIn;
+    private Handler handler = new Handler();
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+    private Runnable tickRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // 페이드 아웃 시작
+            clockText.startAnimation(fadeOut);
+            // 애니메이션 리스너에서 텍스트 교체 및 페이드 인
+            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                @Override public void onAnimationStart(Animation animation) { }
+                @Override public void onAnimationRepeat(Animation animation) { }
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    // 현재 시간으로 텍스트 업데이트
+                    String now = timeFormat.format(new Date());
+                    clockText.setText(now);
+                    // 페이드 인 실행
+                    clockText.startAnimation(fadeIn);
+                }
+            });
+            // 다음 업데이트 예약 (1초 후)
+            handler.postDelayed(this, 1000);
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        clockText = findViewById(R.id.clockText);
+        // 애니메이션 로드
+        fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+        fadeIn  = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        // 첫 실행
+        handler.post(tickRunnable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(tickRunnable);
+    }
+}
