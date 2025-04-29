@@ -2,27 +2,27 @@ fun main(){
     val br=System.`in`.bufferedReader()
     val bw=System.`out`.bufferedWriter()
     val (n,q)=br.readLine().split(" ").map{it.toInt()}
-    val arr = Array(200001){false}
-    var ans = n
+    val skt = Array(200001){false}
+    var lucky = n
     repeat(q){
         val query=br.readLine().split(" ").map{it.toInt()}
         when(query[0]){
             1 -> {
                 val x=query[1]
-                if(!arr[x]){
-                    arr[x]=true
-                    ans--
+                if(!skt[x]){
+                    skt[x]=true
+                    lucky--
                 }
             }
             2 -> {
                 val x=query[1]
-                if(arr[x]){
-                    arr[x]=false
-                    ans++
+                if(skt[x]){
+                    skt[x]=false
+                    lucky++
                 }
             }
             else -> {
-                bw.write("$ans\n")
+                bw.write("$lucky\n")
             }
         }
     }
