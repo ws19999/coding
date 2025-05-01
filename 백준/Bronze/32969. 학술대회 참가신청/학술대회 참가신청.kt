@@ -1,10 +1,8 @@
 fun main(){
-    val title=readln().split(" ")
+    val title=readln().lowercase()
     var digital=false
-    for(word in title){
-        if(word in arrayOf("social","history","language","literacy")){
-            digital=true
-        }
+    if(title.contains("social") || title.contains("history") || title.contains("language") || title.contains("literacy")){
+        digital=true
     }
     if(digital){
         print("digital humanities")
