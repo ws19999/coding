@@ -1,20 +1,12 @@
-import kotlin.collections.*
 fun main(){
-    val apart=ArrayDeque<Int>()
-    repeat(2){
-        readln().toInt()
-    }
+    val n=readln().toInt()
+    readln().toInt()
     val hands=readln().split(" ").map{it.toInt()}
-    for(hand in hands){
-        apart.addLast(hand)
-    }
     val p=readln().split(" ").map{it.toInt()}
+    var pos=2*n-1
     for(i in p){
-        repeat(i-1){
-            val last=apart.first()
-            apart.removeFirst()
-            apart.addLast(last)
-        }
-        print("${apart.first()} ")
+        pos+=i-1
+        pos%=2*n
+        print("${hands[(pos+1)%(2*n)]} ")
     }
 }
