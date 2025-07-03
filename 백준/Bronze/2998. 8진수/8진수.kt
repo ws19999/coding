@@ -2,10 +2,10 @@ fun main(){
     var num=readln()
     when(num.length%3){
         1 -> {
-            num="00"+num
+            num= "00$num"
         }
         2 -> {
-            num="0"+num
+            num= "0$num"
         }
     }
     for(i in 0..<num.length step 3){
