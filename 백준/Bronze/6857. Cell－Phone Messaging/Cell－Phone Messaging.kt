@@ -2,7 +2,11 @@ val keys : MutableMap<Char,Int> = mutableMapOf()
 val cnts : MutableMap<Char,Int> = mutableMapOf()
 fun mapping(c:Char,num:Int){
     var cnt=1
-    for(i in c..c+2){
+    var k=c+2
+    if(num==7 || num==9){
+        k=c+3
+    }
+    for(i in c..k){
         keys[i]=num
         cnts[i]=cnt++
     }
@@ -14,14 +18,10 @@ fun main(){
     mapping('j',5)
     mapping('m',6)
     mapping('p',7)
-    keys['s']=7
-    cnts['s']=4
     mapping('t',8)
     mapping('w',9)
-    keys['z']=9
-    cnts['z']=4
     while(true){
-        val str=readln().trim()
+        val str=readln()
         if(str == "halt")return
         var ans=0
         for(i in 0 until str.length){
