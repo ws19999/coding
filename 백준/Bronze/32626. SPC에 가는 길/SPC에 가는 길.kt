@@ -1,8 +1,8 @@
 import kotlin.math.*
 fun main(){
-    val (sx,sy)=readln().trim().split(" ").map{it.toInt()}
-    val (ex,ey)=readln().trim().split(" ").map{it.toInt()}
-    val (px,py)=readln().trim().split(" ").map{it.toInt()}
+    val (sx,sy)=readln().split(" ").map{it.toInt()}
+    val (ex,ey)=readln().split(" ").map{it.toInt()}
+    val (px,py)=readln().split(" ").map{it.toInt()}
     if(sx==ex || sy==ey){
         if(sx==ex){
             if(px==sx){
