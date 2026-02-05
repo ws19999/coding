@@ -1,5 +1,5 @@
 fun main(){
-    var (n,m)=readln().trim().split(" ").map{it.toInt()}
+    var (n,m)=readln().split(" ").map{it.toInt()}
     var ans=0
     var temp=1
     while(true){
