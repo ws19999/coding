@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 170336 KB, 시간: 1108 ms
+메모리: 170296 KB, 시간: 872 ms
 
 ### 분류
 
@@ -12,13 +12,13 @@
 
 ### 제출 일자
 
-2026년 1월 9일 06:39:08
+2026년 2월 6일 12:01:04
 
 ### 문제 설명
 
 <p>Recently, your friend Oscar purchased an ant farm. He accidentally let the ants loose on his floor and now they’re crawling everywhere! You want to fence them off with a single continuous rectangle so that they’re not running amok. However, due to technical limitations your fence pieces must be aligned with the X and Y axes. The figure below shows an example of a fence around a set of ants (slight offsets from the border are just for visual effect).</p>
 
-<p style="text-align:center"><img alt="" src="" style="height:212px; width:304px"></p>
+<p style="text-align:center"><img alt="" src="https://onlinejudgeimages.s3-ap-northeast-1.amazonaws.com/problem/9298/1.png" style="height:212px; width:304px"></p>
 
 <p>What is the perimeter and area of the smallest fence that contains all of the ants?</p>
 
