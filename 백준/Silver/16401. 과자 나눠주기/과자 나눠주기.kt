@@ -19,7 +19,10 @@ fun binarySearch(a:Long, b:Long, arr:List<Long>, m:Int):Long{
     return ans
 }
 fun main(){
-    val (m,_)=readln().split(" ").map{it.toInt()}
-    val arr=readln().split(" ").map{it.toLong()}
-    println(binarySearch(1,arr.sum(),arr,m))
+    val br = System.`in`.bufferedReader()
+    val bw = System.`out`.bufferedWriter()
+    val (m,_)=br.readLine().split(" ").map{it.toInt()}
+    val arr=br.readLine().split(" ").map{it.toLong()}
+    bw.write("${binarySearch(1,arr.sum(),arr,m)}")
+    bw.close()
 }
